@@ -4,6 +4,7 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
 
 [![Deploy to Github Pages](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/web.yml/badge.svg)](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/web.yml)
 [![Android Release](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/android_build.yml/badge.svg)](https://github.com/sagarshende23/riverpod-todo-app/releases)
+[![macOS Release](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/macos_build.yml/badge.svg)](https://github.com/sagarshende23/riverpod-todo-app/releases)
 
 <div align="center">
 
@@ -69,6 +70,7 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
 ## ✨ Features
 
 - 📱 Clean, modern UI with Material Design 3
+- 🖥️ Cross-platform support (Web, Android, macOS)
 - 🎨 Dynamic theme support (Light/Dark mode)
 - 💾 Local persistence using Hive
 - 📊 Task grouping and organization
@@ -94,6 +96,7 @@ Get the latest version of the app:
 
 | Platform | Download |
 |----------|----------|
+| macOS | [![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/todo_app_macos.dmg) |
 | Android (arm64-v8a) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-arm64-v8a-release.apk) |
 | Android (armeabi-v7a) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-armeabi-v7a-release.apk) |
 | Android (x86_64) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-x86_64-release.apk) |
