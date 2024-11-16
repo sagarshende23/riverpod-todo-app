@@ -13,6 +13,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
 
     steps:
       - uses: actions/checkout@v3
@@ -28,10 +29,11 @@ jobs:
         run: flutter pub get
         
       - name: Build
-        run: flutter build web --base-href "/riverpod-todo-app/"
+        run: flutter build web --release --base-href "/riverpod-todo-app/"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
+          force_orphan: true
