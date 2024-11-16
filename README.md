@@ -8,6 +8,24 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
 
 <div align="center">
 
+### ⚡ Try it Now!
+
+<a href="https://sagarshende23.github.io/riverpod-todo-app">
+  <img src="https://img.shields.io/badge/Try_Web_Version-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Try Web Version" />
+</a>
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-arm64-v8a-release.apk">
+  <img src="https://img.shields.io/badge/Download_Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download Android" />
+</a>
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/todo_app_macos.dmg">
+  <img src="https://img.shields.io/badge/Download_macOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="Download macOS" />
+</a>
+
+</div>
+
+<div align="center">
+
 ### 🌐 Live Demo
 
 <a href="https://sagarshende23.github.io/riverpod-todo-app/">
@@ -94,18 +112,43 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
 
 Get the latest version of the app:
 
-| Platform | Download |
-|----------|----------|
-| macOS | [![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/todo_app_macos.dmg) |
-| Android (arm64-v8a) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-arm64-v8a-release.apk) |
-| Android (armeabi-v7a) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-armeabi-v7a-release.apk) |
-| Android (x86_64) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-x86_64-release.apk) |
-| Web | [Open Web App](https://sagarshende23.github.io/riverpod-todo-app) |
+<div align="center">
 
-Choose the appropriate APK for your device:
-- `arm64-v8a`: Most modern Android devices (64-bit)
-- `armeabi-v7a`: Older Android devices (32-bit)
-- `x86_64`: Android emulators and Chrome OS
+### 🖥️ Desktop & Web
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/todo_app_macos.dmg">
+  <img src="https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="Download for macOS" />
+</a>
+
+<a href="https://sagarshende23.github.io/riverpod-todo-app">
+  <img src="https://img.shields.io/badge/Open_Web_Version-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Open Web Version" />
+</a>
+
+### 📱 Android Versions
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-arm64-v8a-release.apk">
+  <img src="https://img.shields.io/badge/Download_arm64_v8a-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download arm64-v8a" />
+</a>
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-armeabi-v7a-release.apk">
+  <img src="https://img.shields.io/badge/Download_armeabi_v7a-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download armeabi-v7a" />
+</a>
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-x86_64-release.apk">
+  <img src="https://img.shields.io/badge/Download_x86_64-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download x86_64" />
+</a>
+
+### 📝 Version Information
+
+| Platform | Architecture | Devices |
+|----------|--------------|---------|
+| Android | arm64-v8a | Most modern Android devices (2017+) |
+| Android | armeabi-v7a | Older Android devices |
+| Android | x86_64 | Android emulators & Chrome OS |
+| macOS | Universal | Apple Silicon & Intel Macs |
+| Web | All | Any modern web browser |
+
+</div>
 
 ## 🔧 Installation & Setup
 
