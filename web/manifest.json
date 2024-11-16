@@ -1,11 +1,11 @@
 {
-    "name": "todo_app",
-    "short_name": "todo_app",
+    "name": "Todo App",
+    "short_name": "Todo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A Flutter Todo App with Riverpod",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

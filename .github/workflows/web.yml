@@ -36,8 +36,13 @@ jobs:
         run: flutter pub get
         
       - name: Build
-        run: flutter build web --release --base-href "/"
-
+        run: flutter build web --release --base-href "/riverpod-todo-app/"
+        
+      - name: Configure Flutter for web
+        run: |
+          cd build/web
+          echo "window.flutterWebRenderer='html';" > flutter_service_worker.js
+          
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
