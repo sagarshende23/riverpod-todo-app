@@ -5,6 +5,12 @@ on:
     tags:
       - 'v*'
 
+# Sets permissions of the GITHUB_TOKEN
+permissions:
+  contents: write # Required for creating releases
+  packages: write
+  actions: write
+
 jobs:
   build:
     name: Create Android Build
@@ -32,6 +38,7 @@ jobs:
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
