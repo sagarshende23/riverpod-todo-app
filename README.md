@@ -2,6 +2,8 @@
 
 A modern, feature-rich Todo application built with Flutter, showcasing best practices in mobile app development.
 
+[![Deploy to Github Pages](https://github.com/[YOUR_USERNAME]/todo_app/actions/workflows/web.yml/badge.svg)](https://github.com/[YOUR_USERNAME]/todo_app/actions/workflows/web.yml)
+
 ## 📱 Screenshots
 
 <div align="center">
@@ -31,6 +33,10 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
   </table>
 </div>
 
+## 🚀 Live Demo
+
+Check out the live demo of the app: https://[YOUR_USERNAME].github.io/todo_app
+
 ## ✨ Features
 
 - 📱 Clean, modern UI with Material Design 3
@@ -40,6 +46,42 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
 - ↩️ Undo/Redo support for actions
 - ⚡ Fast and responsive animations
 - 🔄 State management with Riverpod
+
+## 🔧 Installation & Setup
+
+1. Clone the repository
+```bash
+git clone https://github.com/[YOUR_USERNAME]/todo_app.git
+```
+
+2. Get Flutter packages
+```bash
+flutter pub get
+```
+
+3. Run the app
+```bash
+flutter run
+```
+
+## 🌐 Web Deployment
+
+This app is automatically deployed to GitHub Pages using GitHub Actions. The deployment workflow:
+
+1. Triggers on push to main branch
+2. Sets up Flutter environment
+3. Enables web support
+4. Builds the web app
+5. Deploys to GitHub Pages
+
+To deploy to your own GitHub Pages:
+
+1. Fork this repository
+2. Go to repository Settings > Pages
+3. Set Source to "GitHub Actions"
+4. Push changes to main branch
+5. Check Actions tab for deployment status
+6. Access your app at `https://[YOUR_USERNAME].github.io/todo_app`
 
 ## Architecture
 
