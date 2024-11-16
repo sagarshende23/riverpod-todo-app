@@ -4,6 +4,12 @@ on:
   push:
     branches: [ main ]
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,7 +28,7 @@ jobs:
         run: flutter pub get
         
       - name: Build
-        run: flutter build web --base-href "/todo_app/"
+        run: flutter build web --base-href "/riverpod-todo-app/"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

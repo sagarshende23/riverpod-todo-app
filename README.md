@@ -2,7 +2,7 @@
 
 A modern, feature-rich Todo application built with Flutter, showcasing best practices in mobile app development.
 
-[![Deploy to Github Pages](https://github.com/[YOUR_USERNAME]/todo_app/actions/workflows/web.yml/badge.svg)](https://github.com/[YOUR_USERNAME]/todo_app/actions/workflows/web.yml)
+[![Deploy to Github Pages](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/web.yml/badge.svg)](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/web.yml)
 
 ## 📱 Screenshots
 
@@ -35,7 +35,7 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
 
 ## 🚀 Live Demo
 
-Check out the live demo of the app: https://[YOUR_USERNAME].github.io/todo_app
+Check out the live demo of the app: https://sagarshende23.github.io/riverpod-todo-app
 
 ## ✨ Features
 
@@ -51,7 +51,7 @@ Check out the live demo of the app: https://[YOUR_USERNAME].github.io/todo_app
 
 1. Clone the repository
 ```bash
-git clone https://github.com/[YOUR_USERNAME]/todo_app.git
+git clone https://github.com/sagarshende23/riverpod-todo-app.git
 ```
 
 2. Get Flutter packages
@@ -81,7 +81,7 @@ To deploy to your own GitHub Pages:
 3. Set Source to "GitHub Actions"
 4. Push changes to main branch
 5. Check Actions tab for deployment status
-6. Access your app at `https://[YOUR_USERNAME].github.io/todo_app`
+6. Access your app at `https://sagarshende23.github.io/riverpod-todo-app`
 
 ## Architecture
 
@@ -122,10 +122,10 @@ lib/
 2. **Installation**
    ```bash
    # Clone the repository
-   git clone [repository-url]
+   git clone https://github.com/sagarshende23/riverpod-todo-app.git
 
    # Navigate to project directory
-   cd todo_app
+   cd riverpod-todo-app
 
    # Get dependencies
    flutter pub get
