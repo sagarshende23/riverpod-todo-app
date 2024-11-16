@@ -5,6 +5,16 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
 [![Deploy to Github Pages](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/web.yml/badge.svg)](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/web.yml)
 [![Android Release](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/android_build.yml/badge.svg)](https://github.com/sagarshende23/riverpod-todo-app/releases)
 
+<div align="center">
+
+### 🌐 Live Demo
+
+<a href="https://sagarshende23.github.io/riverpod-todo-app/">
+  <img src="https://img.shields.io/badge/CLICK_TO_VIEW_LIVE_DEMO-37a779?style=for-the-badge&logoColor=white" alt="Live Demo" />
+</a>
+
+</div>
+
 ## 📱 Screenshots
 
 <div align="center">
@@ -34,9 +44,27 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
   </table>
 </div>
 
-## 🚀 Live Demo
+## 📥 Try the App
 
-Check out the live demo of the app: https://sagarshende23.github.io/riverpod-todo-app
+<div align="center">
+
+<a href="https://sagarshende23.github.io/riverpod-todo-app/">
+  <img src="https://img.shields.io/badge/Web_Demo-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Web Demo" />
+</a>
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-arm64-v8a-release.apk">
+  <img src="https://img.shields.io/badge/Android_arm64-34A853?style=for-the-badge&logo=android&logoColor=white" alt="Android arm64" />
+</a>
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-armeabi-v7a-release.apk">
+  <img src="https://img.shields.io/badge/Android_arm32-34A853?style=for-the-badge&logo=android&logoColor=white" alt="Android arm32" />
+</a>
+
+<a href="https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-x86_64-release.apk">
+  <img src="https://img.shields.io/badge/Android_x64-34A853?style=for-the-badge&logo=android&logoColor=white" alt="Android x64" />
+</a>
+
+</div>
 
 ## ✨ Features
 
@@ -47,6 +75,18 @@ Check out the live demo of the app: https://sagarshende23.github.io/riverpod-tod
 - ↩️ Undo/Redo support for actions
 - ⚡ Fast and responsive animations
 - 🔄 State management with Riverpod
+
+## 🛠️ Built With
+
+<div align="center">
+
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Material Design](https://img.shields.io/badge/Material_Design-757575?style=for-the-badge&logo=material-design&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=for-the-badge&logo=github-pages&logoColor=white)
+
+</div>
 
 ## 📱 Downloads
 
