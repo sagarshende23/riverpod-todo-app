@@ -2,6 +2,32 @@
 
 A modern, feature-rich Todo application built with Flutter, showcasing best practices in mobile app development.
 
+## 📱 Screenshots
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="screenshots/1.png" width="200px" alt="Todo App Screenshot 1"/>
+      </td>
+      <td align="center">
+        <img src="screenshots/2.png" width="200px" alt="Todo App Screenshot 2"/>
+      </td>
+      <td align="center">
+        <img src="screenshots/3.png" width="200px" alt="Todo App Screenshot 3"/>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="screenshots/4.png" width="200px" alt="Todo App Screenshot 4"/>
+      </td>
+      <td align="center">
+        <img src="screenshots/5.png" width="200px" alt="Todo App Screenshot 5"/>
+      </td>
+    </tr>
+  </table>
+</div>
+
 ## Features
 
 - 📱 Clean, modern UI with Material Design 3
