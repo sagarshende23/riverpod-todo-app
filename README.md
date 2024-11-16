@@ -3,6 +3,7 @@
 A modern, feature-rich Todo application built with Flutter, showcasing best practices in mobile app development.
 
 [![Deploy to Github Pages](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/web.yml/badge.svg)](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/web.yml)
+[![Android Release](https://github.com/sagarshende23/riverpod-todo-app/actions/workflows/android_build.yml/badge.svg)](https://github.com/sagarshende23/riverpod-todo-app/releases)
 
 ## 📱 Screenshots
 
@@ -46,6 +47,22 @@ Check out the live demo of the app: https://sagarshende23.github.io/riverpod-tod
 - ↩️ Undo/Redo support for actions
 - ⚡ Fast and responsive animations
 - 🔄 State management with Riverpod
+
+## 📱 Downloads
+
+Get the latest version of the app:
+
+| Platform | Download |
+|----------|----------|
+| Android (arm64-v8a) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-arm64-v8a-release.apk) |
+| Android (armeabi-v7a) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-armeabi-v7a-release.apk) |
+| Android (x86_64) | [Download](https://github.com/sagarshende23/riverpod-todo-app/releases/latest/download/app-x86_64-release.apk) |
+| Web | [Open Web App](https://sagarshende23.github.io/riverpod-todo-app) |
+
+Choose the appropriate APK for your device:
+- `arm64-v8a`: Most modern Android devices (64-bit)
+- `armeabi-v7a`: Older Android devices (32-bit)
+- `x86_64`: Android emulators and Chrome OS
 
 ## 🔧 Installation & Setup
 
