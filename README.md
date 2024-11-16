@@ -4,32 +4,17 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
 
 ## 📱 Screenshots
 
-<div align="center">
-  <table>
-    <tr>
-      <td align="center">
-        <img src="screenshots/1.png" width="200px" alt="Todo App Screenshot 1"/>
-      </td>
-      <td align="center">
-        <img src="screenshots/2.png" width="200px" alt="Todo App Screenshot 2"/>
-      </td>
-      <td align="center">
-        <img src="screenshots/3.png" width="200px" alt="Todo App Screenshot 3"/>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <img src="screenshots/4.png" width="200px" alt="Todo App Screenshot 4"/>
-      </td>
-      <td align="center">
-        <img src="screenshots/5.png" width="200px" alt="Todo App Screenshot 5"/>
-      </td>
-      <td align="center">
-        <img src="screenshots/6.png" width="200px" alt="Todo App Screenshot 6"/>
-      </td>
-    </tr>
-  </table>
-</div>
+<p align="center">
+  <img src="screenshots/1.png" width="230px" />
+  <img src="screenshots/2.png" width="230px" />
+  <img src="screenshots/3.png" width="230px" />
+</p>
+
+<p align="center">
+  <img src="screenshots/4.png" width="230px" />
+  <img src="screenshots/5.png" width="230px" />
+  <img src="screenshots/6.png" width="230px" />
+</p>
 
 ## ✨ Features
 
