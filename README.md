@@ -24,16 +24,19 @@ A modern, feature-rich Todo application built with Flutter, showcasing best prac
       <td align="center">
         <img src="screenshots/5.png" width="200px" alt="Todo App Screenshot 5"/>
       </td>
+      <td align="center">
+        <img src="screenshots/6.png" width="200px" alt="Todo App Screenshot 6"/>
+      </td>
     </tr>
   </table>
 </div>
 
-## Features
+## ✨ Features
 
 - 📱 Clean, modern UI with Material Design 3
 - 🎨 Dynamic theme support (Light/Dark mode)
 - 💾 Local persistence using Hive
-- 📊 Task grouping (Today, Tomorrow, Important, Not Important)
+- 📊 Task grouping and organization
 - ↩️ Undo/Redo support for actions
 - ⚡ Fast and responsive animations
 - 🔄 State management with Riverpod
