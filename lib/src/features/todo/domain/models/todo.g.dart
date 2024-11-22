@@ -57,7 +57,7 @@ class TodoAdapter extends TypeAdapter<Todo> {
 
 class PriorityAdapter extends TypeAdapter<Priority> {
   @override
-  final int typeId = 2;
+  final int typeId = 3;
 
   @override
   Priority read(BinaryReader reader) {

@@ -12,16 +12,21 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
 
-  // Register Hive adapters
-  if (!Hive.isAdapterRegistered(0)) {
-    Hive.registerAdapter(TodoAdapter());
+  // Register Hive adapters with correct type IDs
+  if (!Hive.isAdapterRegistered(3)) {
+    Hive.registerAdapter(PriorityAdapter());
   }
   if (!Hive.isAdapterRegistered(1)) {
     Hive.registerAdapter(TaskGroupTypeAdapter());
   }
-  if (!Hive.isAdapterRegistered(2)) {
-    Hive.registerAdapter(PriorityAdapter());
+  if (!Hive.isAdapterRegistered(0)) {
+    Hive.registerAdapter(TodoAdapter());
   }
+
+  // Clear existing boxes (temporary fix)
+  await Hive.deleteBoxFromDisk('todos');
+  await Hive.deleteBoxFromDisk('user_settings');
+  await Hive.deleteBoxFromDisk('settings');
 
   // Open Hive boxes
   await Hive.openBox<Todo>('todos');

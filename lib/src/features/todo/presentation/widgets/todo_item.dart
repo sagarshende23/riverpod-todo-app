@@ -1,10 +1,9 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/models/todo.dart';
 import '../providers/todo_provider.dart';
 
-class TodoItem extends ConsumerWidget {
+class TodoItem extends ConsumerStatefulWidget {
   final Todo todo;
   final VoidCallback? onToggle;
   final VoidCallback? onDelete;
@@ -17,9 +16,39 @@ class TodoItem extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TodoItem> createState() => _TodoItemState();
+}
+
+class _TodoItemState extends ConsumerState<TodoItem> {
+  bool _isDeleting = false;
+
+  Future<void> _handleDismiss() async {
+    if (_isDeleting) return;
+    setState(() => _isDeleting = true);
+    
+    final success = await ref.read(todoProvider.notifier).removeTodo(widget.todo);
+    
+    if (success && mounted) {
+      widget.onDelete?.call();
+    } else if (mounted) {
+      setState(() => _isDeleting = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to delete todo'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isDeleting) {
+      return const SizedBox.shrink();
+    }
+
     return Dismissible(
-      key: ValueKey(todo.key),
+      key: ValueKey(widget.todo.key),
       background: Container(
         decoration: BoxDecoration(
           color: Colors.red.shade100,
@@ -33,19 +62,19 @@ class TodoItem extends ConsumerWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
-      onDismissed: (_) => onDelete?.call(),
+      onDismissed: (_) => _handleDismiss(),
       child: Card(
         elevation: 2,
         margin: const EdgeInsets.symmetric(vertical: 8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
-            color: todo.group.color.withOpacity(0.2),
+            color: widget.todo.group.color.withOpacity(0.2),
             width: 1,
           ),
         ),
         child: InkWell(
-          onTap: onToggle,
+          onTap: widget.onToggle,
           borderRadius: BorderRadius.circular(16),
           child: Container(
             padding: const EdgeInsets.all(16),
@@ -53,8 +82,8 @@ class TodoItem extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _CheckBox(
-                  isDone: todo.isDone,
-                  color: todo.group.color,
+                  isDone: widget.todo.isDone,
+                  color: widget.todo.group.color,
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -63,11 +92,11 @@ class TodoItem extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        todo.title,
+                        widget.todo.title,
                         style: TextStyle(
                           fontSize: 16,
-                          decoration: todo.isDone ? TextDecoration.lineThrough : null,
-                          color: todo.isDone ? Colors.grey : null,
+                          decoration: widget.todo.isDone ? TextDecoration.lineThrough : null,
+                          color: widget.todo.isDone ? Colors.grey : null,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -78,36 +107,64 @@ class TodoItem extends ConsumerWidget {
                         runSpacing: 8,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          _PriorityChip(priority: todo.priority),
+                          _PriorityChip(priority: widget.todo.priority),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: todo.group.color.withOpacity(0.1),
+                              color: widget.todo.group.color.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
-                                  todo.group.icon,
+                                  widget.todo.group.icon,
                                   size: 16,
-                                  color: todo.group.color,
+                                  color: widget.todo.group.color,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  todo.group.label,
+                                  widget.todo.group.label,
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: todo.group.color,
-                                    fontWeight: FontWeight.w500,
+                                    color: widget.todo.group.color,
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                          if (widget.todo.dueDate != null)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.calendar_today,
+                                    size: 16,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    _formatDate(widget.todo.dueDate!),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                         ],
                       ),
                     ],
@@ -121,7 +178,7 @@ class TodoItem extends ConsumerWidget {
                   onSelected: (Priority priority) {
                     ref
                         .read(todoProvider.notifier)
-                        .updateTodoPriority(todo, priority);
+                        .updateTodoPriority(widget.todo, priority);
                   },
                   itemBuilder: (context) => Priority.values
                       .map(
@@ -144,6 +201,10 @@ class TodoItem extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  String _formatDate(DateTime date) {
+    return '${date.day}/${date.month}/${date.year}';
   }
 }
 

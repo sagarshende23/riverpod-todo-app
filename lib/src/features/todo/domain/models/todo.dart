@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'deadline_status.dart';
 
 part 'todo.g.dart';
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 3)
 enum Priority {
   @HiveField(0)
   high,
@@ -55,12 +54,20 @@ class Todo extends HiveObject {
   @HiveField(3)
   Priority priority;
 
+  @HiveField(4)
+  DateTime createdAt;
+
+  @HiveField(5)
+  DateTime? dueDate;
+
   Todo({
     required this.title,
     this.isDone = false,
     this.groupIndex = 0,
     this.priority = Priority.medium,
-  });
+    DateTime? createdAt,
+    this.dueDate,
+  }) : createdAt = createdAt ?? DateTime.now();
 
   TaskGroup get group => TaskGroup.values[groupIndex];
 
@@ -89,12 +96,16 @@ class Todo extends HiveObject {
     bool? isDone,
     int? groupIndex,
     Priority? priority,
+    DateTime? createdAt,
+    DateTime? dueDate,
   }) {
     return Todo(
       title: title ?? this.title,
       isDone: isDone ?? this.isDone,
       groupIndex: groupIndex ?? this.groupIndex,
       priority: priority ?? this.priority,
+      createdAt: createdAt,
+      dueDate: dueDate,
     );
   }
 }
