@@ -39,6 +39,7 @@ class _TodoListState extends ConsumerState<TodoList>
   @override
   Widget build(BuildContext context) {
     final todos = ref.watch(todoProvider);
+    final sortType = ref.watch(todoSortProvider);
     final currentGroup = TaskGroup.values[_currentIndex];
 
     return Column(
@@ -47,83 +48,225 @@ class _TodoListState extends ConsumerState<TodoList>
           controller: _tabController,
           isScrollable: true,
           tabs: TaskGroup.values.map((group) {
+            final todos = ref
+                .watch(todoProvider.notifier)
+                .getSortedTodos(group.type, sortType);
+            final activeTodos = todos.where((todo) => !todo.isDone).toList();
+
             return Tab(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(group.icon, color: group.color),
+                  Icon(group.icon),
                   const SizedBox(width: 8),
-                  Text(
-                    group.name,
-                    style: TextStyle(color: group.color),
-                  ),
+                  Text(group.label),
+                  if (activeTodos.isNotEmpty) ...[
+                    const SizedBox(width: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: group.color.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        activeTodos.length.toString(),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: group.color,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             );
           }).toList(),
         ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Tasks',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              PopupMenuButton<TodoSort>(
+                icon: const Icon(Icons.sort),
+                onSelected: (TodoSort value) {
+                  ref.read(todoSortProvider.notifier).state = value;
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: TodoSort.priority,
+                    child: Text('Sort by Priority'),
+                  ),
+                  const PopupMenuItem(
+                    value: TodoSort.dueDate,
+                    child: Text('Sort by Due Date'),
+                  ),
+                  const PopupMenuItem(
+                    value: TodoSort.createdAt,
+                    child: Text('Sort by Creation Date'),
+                  ),
+                  const PopupMenuItem(
+                    value: TodoSort.alphabetical,
+                    child: Text('Sort Alphabetically'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
         Expanded(
           child: TabBarView(
             controller: _tabController,
             children: TaskGroup.values.map((group) {
-              final groupTodos = ref
-                  .read(todoProvider.notifier)
-                  .getTodosByGroup(group.type);
+              final todos = ref
+                  .watch(todoProvider.notifier)
+                  .getSortedTodos(group.type, sortType);
+              
+              final activeTodos = todos.where((todo) => !todo.isDone).toList();
+              final completedTodos = todos.where((todo) => todo.isDone).toList();
 
-              return groupTodos.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            group.icon,
-                            size: 48,
-                            color: group.color.withOpacity(0.5),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'No tasks in ${group.name}',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ],
+              if (activeTodos.isEmpty && completedTodos.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        group.icon,
+                        size: 64,
+                        color: group.color.withOpacity(0.5),
                       ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: groupTodos.length,
-                      itemBuilder: (context, index) {
-                        final todo = groupTodos[index];
-                        return Dismissible(
-                          key: ValueKey(todo.key),
-                          background: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.red.shade100,
-                              borderRadius: BorderRadius.circular(16),
+                      const SizedBox(height: 16),
+                      Text(
+                        'No tasks in ${group.label}',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.color
+                                  ?.withOpacity(0.5),
                             ),
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.only(right: 16),
-                            child: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                          ),
-                          direction: DismissDirection.endToStart,
-                          onDismissed: (_) {
-                            ref.read(todoProvider.notifier).removeTodo(todo);
-                          },
-                          child: TodoItem(
-                            todo: todo,
-                            onToggle: () {
-                              ref.read(todoProvider.notifier).toggleTodo(todo);
-                            },
-                          ),
-                        );
-                      },
-                    );
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              return ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  if (activeTodos.isNotEmpty) ...[
+                    const Padding(
+                      padding: EdgeInsets.only(left: 8, bottom: 8),
+                      child: Text(
+                        'Active',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    ...activeTodos.map((todo) => _buildTodoItem(todo)),
+                  ],
+                  if (completedTodos.isNotEmpty) ...[
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 8,
+                        top: activeTodos.isNotEmpty ? 16 : 0,
+                        bottom: 8,
+                      ),
+                      child: const Text(
+                        'Completed',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    ...completedTodos.map((todo) => _buildTodoItem(todo)),
+                  ],
+                ],
+              );
             }).toList(),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildTodoItem(Todo todo) {
+    return Dismissible(
+      key: ValueKey(todo.key ?? todo.title),
+      background: Container(
+        decoration: BoxDecoration(
+          color: Colors.red.shade100,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 16),
+        child: const Icon(
+          Icons.delete,
+          color: Colors.red,
+        ),
+      ),
+      direction: DismissDirection.endToStart,
+      onDismissed: (_) async {
+        final success = await ref.read(todoProvider.notifier).removeTodo(todo);
+        if (!success) {
+          if (!context.mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to delete task'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
+
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Task "${todo.title}" deleted'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () async {
+                final newTodo = await ref.read(todoProvider.notifier).addTodo(
+                      todo.title,
+                      todo.groupIndex,
+                      priority: todo.priority,
+                    );
+                if (newTodo == null && context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Failed to restore task'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        );
+      },
+      child: TodoItem(
+        todo: todo,
+        onToggle: () async {
+          final success = await ref.read(todoProvider.notifier).toggleTodo(todo);
+          if (!success && context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to update task'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

@@ -8,16 +8,34 @@ class ThemeNotifier extends StateNotifier<bool> {
 
   static const _boxName = 'app_settings';
   static const _isDarkModeKey = 'is_dark_mode';
+  Box? _box;
 
   Future<void> _loadTheme() async {
-    final box = await Hive.openBox(_boxName);
-    state = box.get(_isDarkModeKey, defaultValue: false);
+    try {
+      _box = await Hive.openBox(_boxName);
+      final savedTheme = _box?.get(_isDarkModeKey, defaultValue: false);
+      state = savedTheme is bool ? savedTheme : false;
+    } catch (e) {
+      // If there's an error loading the theme, keep the default light theme
+      state = false;
+    }
   }
 
   Future<void> toggleTheme() async {
-    final box = await Hive.openBox(_boxName);
-    state = !state;
-    await box.put(_isDarkModeKey, state);
+    try {
+      _box ??= await Hive.openBox(_boxName);
+      state = !state;
+      await _box?.put(_isDarkModeKey, state);
+    } catch (e) {
+      // If there's an error saving the theme, revert the state change
+      state = !state;
+    }
+  }
+
+  @override
+  void dispose() {
+    _box?.close();
+    super.dispose();
   }
 }
 

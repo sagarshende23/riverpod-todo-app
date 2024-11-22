@@ -13,8 +13,15 @@ void main() async {
   await Hive.initFlutter();
 
   // Register Hive adapters
-  Hive.registerAdapter(TodoAdapter());
-  Hive.registerAdapter(TaskGroupTypeAdapter());
+  if (!Hive.isAdapterRegistered(0)) {
+    Hive.registerAdapter(TodoAdapter());
+  }
+  if (!Hive.isAdapterRegistered(1)) {
+    Hive.registerAdapter(TaskGroupTypeAdapter());
+  }
+  if (!Hive.isAdapterRegistered(2)) {
+    Hive.registerAdapter(PriorityAdapter());
+  }
 
   // Open Hive boxes
   await Hive.openBox<Todo>('todos');

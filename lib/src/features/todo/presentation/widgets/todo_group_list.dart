@@ -14,7 +14,8 @@ class TodoGroupList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final groupTodos = ref.watch(todoProvider.notifier).getTodosByGroup(groupType);
+    final groupTodos =
+        ref.watch(todoProvider.notifier).getTodosByGroup(groupType, completed: null);
     final group = TaskGroup.getByType(groupType);
 
     return AnimatedSwitcher(
@@ -32,7 +33,7 @@ class TodoGroupList extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'No tasks in ${group.name}',
+                    'No tasks in ${group.label}',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Theme.of(context)
                               .textTheme
@@ -66,7 +67,8 @@ class TodoGroupList extends ConsumerWidget {
                   ),
                   direction: DismissDirection.endToStart,
                   onDismissed: (_) async {
-                    final success = await ref.read(todoProvider.notifier).removeTodo(todo);
+                    final success =
+                        await ref.read(todoProvider.notifier).removeTodo(todo);
                     if (!success) {
                       if (!context.mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -85,10 +87,12 @@ class TodoGroupList extends ConsumerWidget {
                         action: SnackBarAction(
                           label: 'Undo',
                           onPressed: () async {
-                            final newTodo = await ref.read(todoProvider.notifier).addTodo(
-                                  todo.title,
-                                  TaskGroup.values.indexWhere((g) => g.type == groupType),
-                                );
+                            final newTodo =
+                                await ref.read(todoProvider.notifier).addTodo(
+                                      todo.title,
+                                      groupType.index,
+                                      priority: todo.priority,
+                                    );
                             if (newTodo == null && context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -105,7 +109,9 @@ class TodoGroupList extends ConsumerWidget {
                   child: TodoItem(
                     todo: todo,
                     onToggle: () async {
-                      final success = await ref.read(todoProvider.notifier).toggleTodo(todo);
+                      final success = await ref
+                          .read(todoProvider.notifier)
+                          .toggleTodo(todo);
                       if (!success && context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

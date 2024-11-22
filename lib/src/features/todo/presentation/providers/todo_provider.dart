@@ -4,6 +4,15 @@ import '../../domain/models/todo.dart';
 
 const String _todosBoxName = 'todos';
 
+final todoSortProvider = StateProvider<TodoSort>((ref) => TodoSort.priority);
+
+enum TodoSort {
+  priority,
+  createdAt,
+  dueDate,
+  alphabetical,
+}
+
 class TodoNotifier extends StateNotifier<List<Todo>> {
   TodoNotifier() : super([]) {
     _loadTodos();
@@ -18,12 +27,19 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     }
   }
 
-  Future<Todo?> addTodo(String title, int groupIndex) async {
+  Future<Todo?> addTodo(
+    String title,
+    int groupIndex, {
+    Priority? priority,
+    DateTime? dueDate,
+  }) async {
     try {
       final box = await Hive.openBox<Todo>(_todosBoxName);
       final todo = Todo(
         title: title,
         groupIndex: groupIndex,
+        priority: priority ?? Priority.medium,
+        dueDate: dueDate,
       );
       await box.add(todo);
       state = [...state, todo];
@@ -33,12 +49,49 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     }
   }
 
+  // Future<Todo?> addTodo(String title, int groupIndex, {Priority? priority}) async {
+  //   try {
+  //     final box = await Hive.openBox<Todo>(_todosBoxName);
+  //     final todo = Todo(
+  //       title: title,
+  //       groupIndex: groupIndex,
+  //       priority: priority ?? Priority.medium,
+  //     );
+  //     await box.add(todo);
+  //     state = [...state, todo];
+  //     return todo;
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
+
   Future<bool> toggleTodo(Todo todo) async {
     try {
-      final box = await Hive.openBox<Todo>(_todosBoxName);
       todo.isDone = !todo.isDone;
       await todo.save();
-      state = [...state];
+      state = [...state]; // Trigger a state update
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> updateTodoPriority(Todo todo, Priority priority) async {
+    try {
+      todo.priority = priority;
+      await todo.save();
+      state = [...state]; // Trigger a state update
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> updateTodoDueDate(Todo todo, DateTime? dueDate) async {
+    try {
+      todo.dueDate = dueDate;
+      await todo.save();
+      state = [...state]; // Trigger a state update
       return true;
     } catch (e) {
       return false;
@@ -47,7 +100,6 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
 
   Future<bool> removeTodo(Todo todo) async {
     try {
-      final box = await Hive.openBox<Todo>(_todosBoxName);
       await todo.delete();
       state = state.where((t) => t.key != todo.key).toList();
       return true;
@@ -56,18 +108,50 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     }
   }
 
-  List<Todo> getTodosByGroup(TaskGroupType type) {
+  List<Todo> getTodosByGroup(TaskGroupType type, {bool? completed}) {
     return state
-        .where((todo) => todo.group.type == type)
-        .toList()
-      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        .where((todo) =>
+            todo.group.type == type &&
+            (completed == null || todo.isDone == completed))
+        .toList();
   }
 
-  Todo? getTodoByIndex(int index) {
-    if (index >= 0 && index < state.length) {
-      return state[index];
+  List<Todo> getSortedTodos(TaskGroupType type, TodoSort sort) {
+    var todos = state.where((todo) => todo.group.type == type).toList();
+
+    switch (sort) {
+      case TodoSort.priority:
+        todos.sort((a, b) {
+          if (a.isDone != b.isDone) return a.isDone ? 1 : -1;
+          if (a.priority != b.priority)
+            return b.priority.index.compareTo(a.priority.index);
+          return b.createdAt.compareTo(a.createdAt);
+        });
+        break;
+      case TodoSort.dueDate:
+        todos.sort((a, b) {
+          if (a.isDone != b.isDone) return a.isDone ? 1 : -1;
+          if (a.dueDate == null && b.dueDate == null)
+            return b.createdAt.compareTo(a.createdAt);
+          if (a.dueDate == null) return 1;
+          if (b.dueDate == null) return -1;
+          return a.dueDate!.compareTo(b.dueDate!);
+        });
+        break;
+      case TodoSort.createdAt:
+        todos.sort((a, b) {
+          if (a.isDone != b.isDone) return a.isDone ? 1 : -1;
+          return b.createdAt.compareTo(a.createdAt);
+        });
+        break;
+      case TodoSort.alphabetical:
+        todos.sort((a, b) {
+          if (a.isDone != b.isDone) return a.isDone ? 1 : -1;
+          return a.title.toLowerCase().compareTo(b.title.toLowerCase());
+        });
+        break;
     }
-    return null;
+    return todos;
   }
 }
 

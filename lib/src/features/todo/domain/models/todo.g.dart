@@ -20,14 +20,16 @@ class TodoAdapter extends TypeAdapter<Todo> {
       title: fields[0] as String,
       isDone: fields[1] as bool,
       groupIndex: fields[2] as int,
-      createdAt: fields[3] as DateTime?,
+      priority: fields[3] as Priority,
+      createdAt: fields[4] as DateTime?,
+      dueDate: fields[5] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Todo obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -35,7 +37,11 @@ class TodoAdapter extends TypeAdapter<Todo> {
       ..writeByte(2)
       ..write(obj.groupIndex)
       ..writeByte(3)
-      ..write(obj.createdAt);
+      ..write(obj.priority)
+      ..writeByte(4)
+      ..write(obj.createdAt)
+      ..writeByte(5)
+      ..write(obj.dueDate);
   }
 
   @override
@@ -45,6 +51,50 @@ class TodoAdapter extends TypeAdapter<Todo> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TodoAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class PriorityAdapter extends TypeAdapter<Priority> {
+  @override
+  final int typeId = 2;
+
+  @override
+  Priority read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return Priority.high;
+      case 1:
+        return Priority.medium;
+      case 2:
+        return Priority.low;
+      default:
+        return Priority.high;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, Priority obj) {
+    switch (obj) {
+      case Priority.high:
+        writer.writeByte(0);
+        break;
+      case Priority.medium:
+        writer.writeByte(1);
+        break;
+      case Priority.low:
+        writer.writeByte(2);
+        break;
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PriorityAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -62,8 +112,6 @@ class TaskGroupTypeAdapter extends TypeAdapter<TaskGroupType> {
         return TaskGroupType.tomorrow;
       case 2:
         return TaskGroupType.important;
-      case 3:
-        return TaskGroupType.notImportant;
       default:
         return TaskGroupType.today;
     }
@@ -80,9 +128,6 @@ class TaskGroupTypeAdapter extends TypeAdapter<TaskGroupType> {
         break;
       case TaskGroupType.important:
         writer.writeByte(2);
-        break;
-      case TaskGroupType.notImportant:
-        writer.writeByte(3);
         break;
     }
   }
