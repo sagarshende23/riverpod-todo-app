@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final timeTickerProvider = StateNotifierProvider<TimeTickerNotifier, DateTime>((ref) {
+final timeTickerProvider =
+    StateNotifierProvider<TimeTickerNotifier, DateTime>((ref) {
   return TimeTickerNotifier();
 });
 

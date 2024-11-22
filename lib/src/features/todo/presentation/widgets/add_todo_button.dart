@@ -131,13 +131,17 @@ class _AddTodoButtonState extends ConsumerState<AddTodoButton>
                                 Icon(
                                   priority.icon,
                                   size: 18,
-                                  color: isSelected ? Colors.white : priority.color,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : priority.color,
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
                                   priority.label,
                                   style: TextStyle(
-                                    color: isSelected ? Colors.white : priority.color,
+                                    color: isSelected
+                                        ? Colors.white
+                                        : priority.color,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -193,13 +197,15 @@ class _AddTodoButtonState extends ConsumerState<AddTodoButton>
                                 Icon(
                                   group.icon,
                                   size: 18,
-                                  color: isSelected ? Colors.white : group.color,
+                                  color:
+                                      isSelected ? Colors.white : group.color,
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
                                   group.label,
                                   style: TextStyle(
-                                    color: isSelected ? Colors.white : group.color,
+                                    color:
+                                        isSelected ? Colors.white : group.color,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),

@@ -38,7 +38,7 @@ class UserNotifier extends StateNotifier<UserState> {
     final box = await Hive.openBox(_boxName);
     final userName = box.get(_nameKey) as String?;
     final isFirstLaunch = box.get(_firstLaunchKey, defaultValue: true) as bool;
-    
+
     state = UserState(
       userName: userName,
       isFirstLaunch: isFirstLaunch,
@@ -49,7 +49,7 @@ class UserNotifier extends StateNotifier<UserState> {
     final box = await Hive.openBox(_boxName);
     await box.put(_nameKey, name);
     await box.put(_firstLaunchKey, false);
-    
+
     state = UserState(
       userName: name,
       isFirstLaunch: false,

@@ -127,9 +127,10 @@ class _TodoListState extends ConsumerState<TodoList>
               final todos = ref
                   .watch(todoProvider.notifier)
                   .getSortedTodos(group.type, sortType);
-              
+
               final activeTodos = todos.where((todo) => !todo.isDone).toList();
-              final completedTodos = todos.where((todo) => todo.isDone).toList();
+              final completedTodos =
+                  todos.where((todo) => todo.isDone).toList();
 
               if (activeTodos.isEmpty && completedTodos.isEmpty) {
                 return Center(
@@ -256,7 +257,8 @@ class _TodoListState extends ConsumerState<TodoList>
       child: TodoItem(
         todo: todo,
         onToggle: () async {
-          final success = await ref.read(todoProvider.notifier).toggleTodo(todo);
+          final success =
+              await ref.read(todoProvider.notifier).toggleTodo(todo);
           if (!success && context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

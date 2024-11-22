@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 enum DeadlineStatus {
-  overdue,      // Past due date
-  urgent,       // Due within 24 hours
-  upcoming,     // Due within 3 days
-  scheduled,    // Has future due date
-  none;         // No due date set
+  overdue, // Past due date
+  urgent, // Due within 24 hours
+  upcoming, // Due within 3 days
+  scheduled, // Has future due date
+  none; // No due date set
 
   String get message {
     switch (this) {
@@ -101,7 +101,8 @@ class DeadlineHandler {
     final tomorrow = today.add(const Duration(days: 1));
     final dueDay = DateTime(dueDate.year, dueDate.month, dueDate.day);
 
-    final timeStr = '${dueDate.hour.toString().padLeft(2, '0')}:${dueDate.minute.toString().padLeft(2, '0')}';
+    final timeStr =
+        '${dueDate.hour.toString().padLeft(2, '0')}:${dueDate.minute.toString().padLeft(2, '0')}';
 
     if (dueDay == today) {
       return 'Today, $timeStr';

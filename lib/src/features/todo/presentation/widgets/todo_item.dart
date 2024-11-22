@@ -44,10 +44,10 @@ class _TodoItemState extends ConsumerState<TodoItem> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isOverdue = widget.todo.dueDate != null && 
-        widget.todo.dueDate!.isBefore(_now) && 
+    final bool isOverdue = widget.todo.dueDate != null &&
+        widget.todo.dueDate!.isBefore(_now) &&
         !widget.todo.isDone;
-    final bool isDueSoon = widget.todo.dueDate != null && 
+    final bool isDueSoon = widget.todo.dueDate != null &&
         !isOverdue &&
         !widget.todo.isDone &&
         widget.todo.dueDate!.difference(_now).inHours <= 24;
@@ -89,7 +89,8 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                 top: 0,
                 right: 0,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: isOverdue
                         ? Colors.red
@@ -144,7 +145,9 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                   children: [
                     _CheckBox(
                       isDone: widget.todo.isDone,
-                      color: widget.todo.isOverdue ? Colors.red : widget.todo.group.color,
+                      color: widget.todo.isOverdue
+                          ? Colors.red
+                          : widget.todo.group.color,
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -156,7 +159,9 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                             widget.todo.title,
                             style: TextStyle(
                               fontSize: 16,
-                              decoration: widget.todo.isDone ? TextDecoration.lineThrough : null,
+                              decoration: widget.todo.isDone
+                                  ? TextDecoration.lineThrough
+                                  : null,
                               color: widget.todo.isDone ? Colors.grey : null,
                             ),
                             maxLines: 2,
@@ -175,7 +180,8 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: widget.todo.group.color.withOpacity(0.1),
+                                  color:
+                                      widget.todo.group.color.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Row(
@@ -207,7 +213,8 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                                       vertical: 4,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: _getDueDateColor().withOpacity(0.1),
+                                      color:
+                                          _getDueDateColor().withOpacity(0.1),
                                       borderRadius: BorderRadius.circular(12),
                                       border: Border.all(
                                         color: _getDueDateColor(),
@@ -224,7 +231,8 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                                         ),
                                         const SizedBox(width: 4),
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
@@ -334,7 +342,7 @@ class _TodoItemState extends ConsumerState<TodoItem> {
     if (widget.todo.isDone) return 'COMPLETED';
     if (widget.todo.dueDate == null) return '';
     if (widget.todo.dueDate!.isBefore(_now)) return 'OVERDUE';
-    
+
     final difference = widget.todo.dueDate!.difference(_now);
     if (difference.inHours <= 24) return 'DUE SOON';
     if (difference.inDays <= 3) return 'UPCOMING';
@@ -343,7 +351,7 @@ class _TodoItemState extends ConsumerState<TodoItem> {
 
   String _getTimeRemaining() {
     if (widget.todo.dueDate == null) return '';
-    
+
     final difference = widget.todo.dueDate!.difference(_now);
     if (difference.isNegative) {
       final duration = difference.abs();
@@ -352,7 +360,7 @@ class _TodoItemState extends ConsumerState<TodoItem> {
       if (duration.inMinutes > 0) return '${duration.inMinutes}m overdue';
       return 'Just overdue';
     }
-    
+
     if (difference.inDays > 0) return 'In ${difference.inDays}d';
     if (difference.inHours > 0) return 'In ${difference.inHours}h';
     if (difference.inMinutes > 0) return 'In ${difference.inMinutes}m';
@@ -362,7 +370,7 @@ class _TodoItemState extends ConsumerState<TodoItem> {
   Future<void> _showDateTimePicker(BuildContext context) async {
     final now = DateTime.now();
     final initialDate = widget.todo.dueDate ?? now;
-    
+
     final pickedDate = await showDatePicker(
       context: context,
       initialDate: initialDate.isAfter(now) ? initialDate : now,
@@ -420,9 +428,9 @@ class _TodoItemState extends ConsumerState<TodoItem> {
   Color _getDueDateColor() {
     if (widget.todo.isDone) return Colors.grey;
     if (widget.todo.dueDate == null) return Colors.grey;
-    
+
     if (widget.todo.dueDate!.isBefore(_now)) return Colors.red.shade700;
-    
+
     final difference = widget.todo.dueDate!.difference(_now);
     if (difference.inHours <= 24) return Colors.orange;
     if (difference.inDays <= 3) return Colors.amber;
@@ -432,9 +440,9 @@ class _TodoItemState extends ConsumerState<TodoItem> {
   IconData _getDeadlineIcon() {
     if (widget.todo.isDone) return Icons.check_circle;
     if (widget.todo.dueDate == null) return Icons.calendar_today;
-    
+
     if (widget.todo.dueDate!.isBefore(_now)) return Icons.warning;
-    
+
     final difference = widget.todo.dueDate!.difference(_now);
     if (difference.inHours <= 24) return Icons.timer;
     if (difference.inDays <= 3) return Icons.upcoming;

@@ -80,12 +80,12 @@ class Todo extends HiveObject {
   DeadlineStatus get deadlineStatus {
     if (isDone) return DeadlineStatus.none;
     if (dueDate == null) return DeadlineStatus.none;
-    
+
     if (isOverdue) return DeadlineStatus.overdue;
-    
+
     final now = DateTime.now();
     final difference = dueDate!.difference(now);
-    
+
     if (difference.inHours <= 24) return DeadlineStatus.urgent;
     if (difference.inDays <= 3) return DeadlineStatus.upcoming;
     return DeadlineStatus.scheduled;
@@ -93,14 +93,15 @@ class Todo extends HiveObject {
 
   String get dueDateFormatted {
     if (dueDate == null) return 'No due date';
-    
+
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final tomorrow = today.add(const Duration(days: 1));
     final dueDay = DateTime(dueDate!.year, dueDate!.month, dueDate!.day);
-    
-    String timeStr = '${dueDate!.hour.toString().padLeft(2, '0')}:${dueDate!.minute.toString().padLeft(2, '0')}';
-    
+
+    String timeStr =
+        '${dueDate!.hour.toString().padLeft(2, '0')}:${dueDate!.minute.toString().padLeft(2, '0')}';
+
     if (dueDay == today) {
       return 'Today at $timeStr';
     } else if (dueDay == tomorrow) {
@@ -112,10 +113,10 @@ class Todo extends HiveObject {
 
   String get timeRemaining {
     if (dueDate == null) return '';
-    
+
     final now = DateTime.now();
     final difference = dueDate!.difference(now);
-    
+
     if (difference.isNegative) {
       final duration = difference.abs();
       if (duration.inDays > 0) return '${duration.inDays}d overdue';
@@ -123,7 +124,7 @@ class Todo extends HiveObject {
       if (duration.inMinutes > 0) return '${duration.inMinutes}m overdue';
       return 'Just overdue';
     }
-    
+
     if (difference.inDays > 0) return 'In ${difference.inDays}d';
     if (difference.inHours > 0) return 'In ${difference.inHours}h';
     if (difference.inMinutes > 0) return 'In ${difference.inMinutes}m';
@@ -134,10 +135,10 @@ class Todo extends HiveObject {
     if (dueDate == null) return '';
     if (isDone) return 'COMPLETED';
     if (isOverdue) return 'OVERDUE';
-    
+
     final now = DateTime.now();
     final difference = dueDate!.difference(now);
-    
+
     if (difference.inHours <= 24) return 'DUE SOON';
     if (difference.inDays <= 3) return 'UPCOMING';
     return 'SCHEDULED';
@@ -147,10 +148,10 @@ class Todo extends HiveObject {
     if (isDone) return Colors.grey;
     if (isOverdue) return Colors.red.shade700;
     if (dueDate == null) return Colors.grey;
-    
+
     final now = DateTime.now();
     final difference = dueDate!.difference(now);
-    
+
     if (difference.inHours <= 24) return Colors.orange.shade700;
     if (difference.inDays <= 3) return Colors.amber.shade700;
     return Colors.blue.shade700;
@@ -160,10 +161,10 @@ class Todo extends HiveObject {
     if (isDone) return Icons.check_circle_outline;
     if (isOverdue) return Icons.warning_rounded;
     if (dueDate == null) return Icons.calendar_today_outlined;
-    
+
     final now = DateTime.now();
     final difference = dueDate!.difference(now);
-    
+
     if (difference.inHours <= 24) return Icons.timer;
     if (difference.inDays <= 3) return Icons.upcoming;
     return Icons.event;
@@ -171,12 +172,12 @@ class Todo extends HiveObject {
 
   Future<void> setDueDate(DateTime? newDueDate) async {
     dueDate = newDueDate;
-    await save();  // Save changes to Hive
+    await save(); // Save changes to Hive
   }
 
   Future<void> removeDueDate() async {
     dueDate = null;
-    await save();  // Save changes to Hive
+    await save(); // Save changes to Hive
   }
 
   Future<void> updateDueDate(DateTime? dateTime) async {

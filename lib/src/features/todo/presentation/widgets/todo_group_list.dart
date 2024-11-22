@@ -14,8 +14,9 @@ class TodoGroupList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final groupTodos =
-        ref.watch(todoProvider.notifier).getTodosByGroup(groupType, completed: null);
+    final groupTodos = ref
+        .watch(todoProvider.notifier)
+        .getTodosByGroup(groupType, completed: null);
     final group = TaskGroup.getByType(groupType);
 
     return AnimatedSwitcher(
